@@ -5,8 +5,8 @@ from stocks.models import Stock
 
 @task
 def modify_prices():
-    max_change = .05
+    max_change = Decimal('.05')
     for stock in Stock.objects.all():
-        stock.current_price += random.triangular(-max_change * stock.current_price,
-                max_change * stock.current_price)
+        #stock.current_price += Decimal(random.triangular(-max_change * stock.current_price,
+        stock.current_price += Decimal(random.triangular(-10, 10))
         stock.save()

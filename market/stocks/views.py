@@ -8,6 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 
 from stocks.models import Stock
+from stocks.tasks import *
 
 def dashboard(request):
     stocks = Stock.objects.all()
@@ -16,6 +17,12 @@ def dashboard(request):
     }, context_instance=RequestContext(request))
 
 def ajax_stocks(request):
+    max_change = Decimal('.05')
+    for stock in Stock.objects.all():
+        #stock.current_price += Decimal(random.triangular(-max_change * stock.current_price,
+        stock.current_price += Decimal(random.triangular(-10, 10))
+        stock.save()
+    
     response = json.dumps({
         s.ticker : float(s.current_price) for s in Stock.objects.all()})
     return HttpResponse(response)
