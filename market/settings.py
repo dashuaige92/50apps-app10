@@ -1,4 +1,11 @@
+import os.path
+PROJECT_DIR = os.path.dirname(__file__)
+
+import djcelery, djkombu
+
 # Django settings for market project.
+
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,8 +18,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'temp.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -56,7 +63,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(PROJECT_DIR, '../static/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -72,6 +79,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_DIR, 'stocks/static/'),
 )
 
 # List of finder classes that know how to find static files in
@@ -106,6 +114,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(PROJECT_DIR, 'stocks/static/')
 )
 
 INSTALLED_APPS = (
@@ -119,6 +128,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+
+    'djcelery',
+    'djkombu',
+    # 'social_auth',
+    # 'django_evolution',
+
+    'stocks',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -143,3 +159,9 @@ LOGGING = {
         },
     }
 }
+
+
+# djcelery configuration
+djcelery.setup_loader()
+BROKER_BACKEND = "djkombu.transport.DatabaseTransport"
+CELERY_RESULT_DBURI = DATABASES['default']

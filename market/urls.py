@@ -4,8 +4,6 @@ from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from 
-
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'market.views.home', name='home'),

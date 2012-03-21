@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Stock Simulation</title>
+  </head>
+  <body>
+    <div id="container">
+    {% block container %}
+    <ul class="stocks">
+      {% for stock in stocks %}
+      <li data-ticker="{{ stock.ticker }}">
+        {{ stock.ticker }},
+        {{ stock.current_price }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endblock %}
+    </div>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/main.js"></script>
+  </body>
+</html>
