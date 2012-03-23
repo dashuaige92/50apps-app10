@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+ul.stocks {
+    list-style-type: none;
+    text-align: left;
+    margin: 25px auto 0 25px;
+    width: 60%;
+}
+
+ul.stocks li {
+    display: inline-block;
+    width: 25%;
+    margin: .5em;
+    border: 1px solid #00F;
+    border-radius: 10px;
+}
+
+ul.stocks li div {
+    padding: .5em;
+}
+
+ul.stocks li div.ticker {
+    border-radius: 10px 10px 0px 0px;
+    text-align: center;
+    background: #CCF;
+}
+
+ul.stocks li div.price {
+    float: right;
+}
+
+ul.stocks li div.change {
+    float: left;
+}

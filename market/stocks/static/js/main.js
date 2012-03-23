@@ -8,8 +8,7 @@
             success: function(results) {
                 $stocks.children().each(function() {
                     $this = $(this);
-                    $this.html($this.data('ticker') + ', ' +
-                                results[$this.data('ticker')]);
+                    $this.children('.price').html(results[$this.data('ticker')]);
                     //console.log(typeof(stock));
                 });
             }
