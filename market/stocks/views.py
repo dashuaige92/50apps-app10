@@ -17,11 +17,7 @@ def dashboard(request):
     }, context_instance=RequestContext(request))
 
 def ajax_stocks(request):
-    max_change = Decimal('.05')
-    for stock in Stock.objects.all():
-        #stock.current_price += Decimal(random.triangular(-max_change * stock.current_price,
-        stock.current_price += Decimal(random.triangular(-10, 10))
-        stock.save()
+    modify_stocks(request)
     
     response = json.dumps({
         s.ticker : float(s.current_price) for s in Stock.objects.all()})
@@ -36,4 +32,9 @@ def generate_stocks(request):
         s.save()
     
     return HttpResponseRedirect('/stocks/')
-    #return HttpResponseRedirect(reverse('/stocks/'))
+
+def modify_stocks(request):
+    max_change = Decimal('.05')
+    for stock in filter(lambda s: s.current_price, Stock.objects.all()):
+        stock.current_price = max(0, stock.current_price + Decimal(random.triangular(-10, 10)))
+        stock.save()
